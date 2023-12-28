@@ -4,5 +4,4 @@ tensorflow
 keras
 numpy
 pillow
-opencv-contrib-python
-opencv-python
+opencn-headless-python
