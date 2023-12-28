@@ -5,3 +5,4 @@ keras
 numpy
 pillow
 opencv-python-headless
+Flask-CORS

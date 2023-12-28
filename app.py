@@ -2,8 +2,12 @@ from flask import Flask, request, jsonify
 from prediction import *
 import os
 import base64
+from flask_cors import CORS  # Import the CORS module
+
 
 app = Flask(__name__)
+CORS(app, resources={r"/": {"origins": "*"}})
+
 UPLOAD_FOLDER = os.path.basename('.')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
