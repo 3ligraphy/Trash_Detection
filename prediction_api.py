@@ -16,10 +16,10 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def predict(img_path):
     labels = {0: 'Cardboard', 1: 'Glass', 2: 'Metal', 3: 'Paper', 4: 'Plastic', 5: 'Trash'}
-    img = image.load_img(img_path, target_size=(300, 300))  # Update target_size to match the model's expected input shape
+    img = image.load_img(img_path, target_size=(224, 224))  # Update target_size to match the model's expected input shape
     img = image.img_to_array(img, dtype=np.uint8)
     img = np.array(img) / 255.0
-    model = tf.keras.models.load_model("trained_model.h5")
+    model = tf.keras.models.load_model("new_model_denseNet169.h5")
     predicted = model.predict(img[np.newaxis, ...])
     prob = np.max(predicted[0], axis=-1)
     prob = prob * 100
