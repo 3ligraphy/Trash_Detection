@@ -12,7 +12,7 @@ model = None
 
 def load_model():
     global model
-    model_path = "new_model_denseNet169.h5"  # Adjust the path based on Railway's file structure
+    model_path = "new_model_mobileNet.h5"  # Adjust the path based on Railway's file structure
     model = tf.keras.models.load_model(model_path)
 
 # Load the model during app startup
