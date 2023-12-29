@@ -7,6 +7,16 @@ import json
 from flask import Flask, request, jsonify, abort
 from PIL import Image
 from flask_cors import CORS  # Import the CORS module
+# Initialize the model variable
+model = None  
+
+def load_model():
+    global model
+    model_path = "new_model_denseNet169.h5"  # Adjust the path based on Railway's file structure
+    model = tf.keras.models.load_model(model_path)
+
+# Load the model during app startup
+load_model()
 
 app = Flask(__name__)
 CORS(app, resources={r"/": {"origins": "*"}})
@@ -19,7 +29,6 @@ def predict(img_path):
     img = image.load_img(img_path, target_size=(224, 224))  # Update target_size to match the model's expected input shape
     img = image.img_to_array(img, dtype=np.uint8)
     img = np.array(img) / 255.0
-    model = tf.keras.models.load_model("new_model_denseNet169.h5")
     predicted = model.predict(img[np.newaxis, ...])
     prob = np.max(predicted[0], axis=-1)
     prob = prob * 100
