@@ -75,6 +75,7 @@ def predict_trash_type():
         # Print the exception for debugging
         print("Error:", str(e))
         return jsonify({"error": "Internal server error"}), 500
+    #test
 
 if __name__ == "__main__":
     app.run(debug=True)
