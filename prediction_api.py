@@ -14,12 +14,23 @@ CORS(app, resources={r"/": {"origins": "*"}})
 UPLOAD_FOLDER = os.path.basename('.')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+# Initialize model as a global variable
+model = None
+
+def load_model():
+    global model
+    if model is None:
+        model = tf.keras.models.load_model("new_model_mobileNet.h5")
+
+# Call load_model function at the start of the application
+load_model()
+
+
 def predict(img_path):
     labels = {0: 'Cardboard', 1: 'Glass', 2: 'Metal', 3: 'Paper', 4: 'Plastic', 5: 'Trash'}
     img = image.load_img(img_path, target_size=(224, 224))  # Update target_size to match the model's expected input shape
     img = image.img_to_array(img, dtype=np.uint8)
     img = np.array(img) / 255.0
-    model = tf.keras.models.load_model("new_model_mobileNet.h5")
     predicted = model.predict(img[np.newaxis, ...])
     prob = np.max(predicted[0], axis=-1)
     prob = prob * 100
